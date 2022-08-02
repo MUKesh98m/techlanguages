@@ -1,7 +1,9 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:techlanguages/themes/color.dart';
+import 'package:techlanguages/widgets/notification_bar.dart';
 
 class homepage extends StatefulWidget {
   const homepage({Key? key}) : super(key: key);
@@ -50,17 +52,8 @@ class _homepageState extends State<homepage> {
                 ),
               ],
             ),
-            Container(
-              padding: EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: appBarColor,
-                  border: Border.all(color: Colors.grey.withOpacity(0.3))),
-              height: 30,
-              width: 30,
-              child: SvgPicture.asset(
-                "assets/icons/bell.svg",
-              ),
+            notification_bar(
+              notificationnumber: 5,
             )
           ],
         ),

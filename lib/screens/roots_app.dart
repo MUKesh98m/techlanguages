@@ -24,64 +24,32 @@ class _RootAppState extends State<RootApp> with TickerProviderStateMixin {
     {
       "icon": "assets/icons/search.svg",
       "active_icon": "assets/icons/search.svg",
-      "page": Container(),
+      "page": Container(child: Center(child: Text("search"))),
     },
     {
       "icon": "assets/icons/play.svg",
       "active_icon": "assets/icons/play.svg",
-      "page": Container(),
+      "page": Container(child: Center(child: Text("play Course"))),
     },
     {
       "icon": "assets/icons/chat.svg",
       "active_icon": "assets/icons/chat.svg",
-      "page": Container(),
+      "page": Container(
+        child: Center(child: Text("Chating")),
+      ),
     },
     {
       "icon": "assets/icons/profile.svg",
       "active_icon": "assets/icons/profile.svg",
-      "page": Container(),
+      "page": Container(child: Center(child: Text("profile"))),
     },
   ];
 
-//====== set animation=====
-//   late final AnimationController _controller = AnimationController(
-//     duration: const Duration(milliseconds: ANIMATED_BODY_MS),
-//     vsync: this,
-//   );
-//   late final Animation<double> _animation = CurvedAnimation(
-//     parent: _controller,
-//     curve: Curves.fastOutSlowIn,
-//   );
-
-  @override
-  // void initState() {
-  //   super.initState();
-  //   _controller.forward();
-  // }
-
-  @override
-  // void dispose() {
-  //   _controller.stop();
-  //   _controller.dispose();
-  //   super.dispose();
-  // }
-
-  // animatedPage(page){
-  //   return FadeTransition(
-  //       child: page,
-  //       opacity: _animation
-  //   );
-  // }
-
   void onPageChanged(int index) {
-    // _controller.reset();
     setState(() {
       activeTab = index;
     });
-    // _controller.forward();
   }
-
-//====== end set animation=====
 
   @override
   Widget build(BuildContext context) {
