@@ -5,6 +5,8 @@ import 'package:techlanguages/screens/home.dart';
 import 'package:techlanguages/widgets/bottom_bar.dart';
 
 import '../themes/color.dart';
+import '../widgets/prod.dart';
+import 'explore.dart';
 
 class RootApp extends StatefulWidget {
   const RootApp({Key? key}) : super(key: key);
@@ -19,12 +21,12 @@ class _RootAppState extends State<RootApp> with TickerProviderStateMixin {
     {
       "icon": "assets/icons/home.svg",
       "active_icon": "assets/icons/home.svg",
-      "page": homepage(),
+      "page": MyHomePage(),
     },
     {
       "icon": "assets/icons/search.svg",
       "active_icon": "assets/icons/search.svg",
-      "page": Container(child: Center(child: Text("search"))),
+      "page": explore_page(),
     },
     {
       "icon": "assets/icons/play.svg",

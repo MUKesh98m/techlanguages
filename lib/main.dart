@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:techlanguages/screens/roots_app.dart';
+import 'package:techlanguages/screens/home.dart';
 import 'package:techlanguages/themes/color.dart';
+import 'package:techlanguages/widgets/features_model.dart';
+import 'package:techlanguages/widgets/features_product.dart';
+import 'package:techlanguages/widgets/prod.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -19,6 +22,6 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: appBgColor,
           primaryColor: Colors.white,
         ),
-        home: RootApp());
+        home: MyHomePage());
   }
 }
