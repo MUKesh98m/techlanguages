@@ -8,8 +8,7 @@ import 'package:lottie/lottie.dart';
 import 'package:techlanguages/api.dart';
 import 'package:techlanguages/themes/color.dart';
 import 'package:techlanguages/utils/data.dart';
-import 'package:techlanguages/widgets/carousel_features.dart';
-import 'package:techlanguages/widgets/features_item.dart';
+
 import 'package:techlanguages/widgets/notification_bar.dart';
 import 'package:techlanguages/widgets/prod.dart';
 import 'package:techlanguages/widgets/recommends_item.dart';
@@ -32,16 +31,16 @@ class _MyHomePageState extends State<MyHomePage>
   late TabController tabController;
 
   final List<Color> colors = [
-    Colors.blue,
-    Colors.blue,
-    Colors.blue,
-    Colors.blue,
+    Colors.black,
+    Colors.black,
+    Colors.black,
+    Colors.black,
   ];
 
   @override
   void initState() {
     currentPage = 0;
-    tabController = TabController(length: 4, vsync: this);
+    tabController = TabController(length: 3, vsync: this);
     tabController.animation!.addListener(
       () {
         final value = tabController.animation!.value.round();
@@ -88,11 +87,8 @@ class _MyHomePageState extends State<MyHomePage>
                 icons: Icons.search,
                 color: currentPage == 1 ? colors[1] : Colors.white),
             TabsIcon(
-                icons: Icons.queue_play_next,
-                color: currentPage == 2 ? colors[2] : Colors.white),
-            TabsIcon(
                 icons: Icons.person,
-                color: currentPage == 3 ? colors[3] : Colors.white),
+                color: currentPage == 2 ? colors[2] : Colors.white),
           ],
         ),
         borderRadius: BorderRadius.circular(500),
