@@ -8,7 +8,14 @@ import '../api.dart';
 import '../themes/color.dart';
 
 class see_all extends StatelessWidget {
-  const see_all({Key? key}) : super(key: key);
+  const see_all(
+      {Key? key, this.getApi, this.image, this.name, this.session, this.price})
+      : super(key: key);
+  final getApi;
+  final image;
+  final name;
+  final session;
+  final price;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +25,7 @@ class see_all extends StatelessWidget {
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           child: FutureBuilder(
-            future: getfeatures(),
+            future: getApi,
             builder: (context, AsyncSnapshot snapshot) {
               if (snapshot.data == null) {
                 return Shimmer.fromColors(

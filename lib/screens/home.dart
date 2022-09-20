@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:floating_frosted_bottom_bar/app/frosted_bottom_bar.dart';
 
@@ -6,6 +9,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:techlanguages/api.dart';
+import 'package:techlanguages/screens/explore.dart';
+import 'package:techlanguages/screens/profile_page.dart';
+import 'package:techlanguages/screens/searchbar.dart';
 import 'package:techlanguages/themes/color.dart';
 import 'package:techlanguages/utils/data.dart';
 
@@ -27,129 +33,113 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage>
     with SingleTickerProviderStateMixin {
-  late int currentPage;
-  late TabController tabController;
-
-  final List<Color> colors = [
-    Colors.black,
-    Colors.black,
-    Colors.black,
-    Colors.black,
-  ];
-
+  @override
+  int tabIndex = 0;
+  List<Widget>? listScreens;
   @override
   void initState() {
-    currentPage = 0;
-    tabController = TabController(length: 3, vsync: this);
-    tabController.animation!.addListener(
-      () {
-        final value = tabController.animation!.value.round();
-        if (value != currentPage && mounted) {
-          changePage(value);
-        }
-      },
-    );
     super.initState();
+    listScreens = [buildBody(), SearchBar(), profile_page()];
   }
 
-  void changePage(int newPage) {
-    setState(() {
-      currentPage = newPage;
-    });
-  }
-
-  @override
-  void dispose() {
-    tabController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: getappbar(),
-      body: FrostedBottomBar(
-        opacity: 0.6,
-        sigmaX: 5,
-        sigmaY: 5,
-        child: TabBar(
-          indicatorPadding: const EdgeInsets.fromLTRB(6, 0, 6, 0),
-          controller: tabController,
-          indicator: const UnderlineTabIndicator(
-            borderSide: BorderSide(color: Colors.blue, width: 4),
-            insets: EdgeInsets.fromLTRB(16, 0, 16, 8),
-          ),
-          tabs: [
-            TabsIcon(
-                icons: Icons.home,
-                color: currentPage == 0 ? colors[0] : Colors.white),
-            TabsIcon(
-                icons: Icons.search,
-                color: currentPage == 1 ? colors[1] : Colors.white),
-            TabsIcon(
-                icons: Icons.person,
-                color: currentPage == 2 ? colors[2] : Colors.white),
-          ],
-        ),
-        borderRadius: BorderRadius.circular(500),
-        duration: const Duration(milliseconds: 800),
-        hideOnScroll: true,
-        body: (context, controller) => TabBarView(
-          controller: tabController,
-          dragStartBehavior: DragStartBehavior.down,
-          physics: const BouncingScrollPhysics(),
-          children: colors
-              .map(
-                (e) => ListView.builder(
-                  itemCount: 1,
-                  controller: controller,
-                  itemBuilder: (context, index) {
-                    return buildBody();
-                  },
+      backgroundColor: Colors.white,
+      body: IndexedStack(index: tabIndex, children: listScreens!),
+      bottomNavigationBar: BottomNavigationBar(
+          currentIndex: tabIndex,
+          onTap: (int index) {
+            setState(() {
+              tabIndex = index;
+            });
+          },
+          items: [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+            BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.search,
                 ),
-              )
-              .toList(),
-        ),
-      ),
+                label: "Explore"),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
+          ]),
     );
   }
 
   Widget buildBody() {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // getCategory(),
-          product_model(),
+    return Scaffold(
+      appBar: getappbar(),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // getCategory(),
+            product_model(),
 
-          // getFeatures1(),
-          menu(),
-          menu(),
-
-          SizedBox(
-            height: 10,
-          ),
-          Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(15, 25, 15, 15),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Recommended",
-                  style: TextStyle(
-                      color: textColor,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 22),
-                ),
-                Text(
-                  "See all",
-                  style: TextStyle(color: textColor, fontSize: 14),
-                ),
-              ],
+            // getFeatures1(),
+            menu(),
+            SizedBox(
+              height: 10,
             ),
-          ),
-          getRecommended(),
-        ],
+            InkWell(
+              onTap: () {
+                var snackBar = SnackBar(
+                  elevation: 0,
+                  behavior: SnackBarBehavior.floating,
+                  backgroundColor: Colors.transparent,
+                  content: AwesomeSnackbarContent(
+                    title: 'Recommended!',
+                    message:
+                        'CONNECT WITH FRIENDS.EARN FORTNITE “XANDER” IN-GAME COSMETIC OUTFIT AND OTHER IN-GAME REWARDS!',
+                    contentType: ContentType.failure,
+                  ),
+                );
+
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              },
+              child: Image.asset("assets/icons/refer.png"),
+            ),
+
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(15, 10, 15, 15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Recommended",
+                    style: TextStyle(
+                        color: textColor,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 22),
+                  ),
+                  InkWell(
+                    child: Text(
+                      "See all",
+                      style: TextStyle(color: textColor, fontSize: 14),
+                    ),
+                    onTap: () {
+                      var snackBar = SnackBar(
+                        /// need to set following properties for best effect of awesome_snackbar_content
+                        elevation: 0,
+                        behavior: SnackBarBehavior.floating,
+                        backgroundColor: Colors.transparent,
+                        content: AwesomeSnackbarContent(
+                          title: 'Recommended!',
+                          message: 'Recommended Is comming Soon!',
+
+                          /// Recommended Is comming Soon!
+                          contentType: ContentType.success,
+                        ),
+                      );
+
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    },
+                  ),
+                ],
+              ),
+            ),
+            getRecommended(),
+          ],
+        ),
       ),
     );
   }
@@ -346,7 +336,9 @@ class menu extends StatelessWidget {
                           ),
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => see_all()));
+                                builder: (context) => see_all(
+                                      getApi: getfeatures(),
+                                    )));
                           },
                         ),
                       ]),
